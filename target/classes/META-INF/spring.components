@@ -1,0 +1,2 @@
+br.com.carlos.webdriver.java.App=org.springframework.stereotype.Component
+br.com.carlos.webdriver.java.GreetingController=org.springframework.stereotype.Component
