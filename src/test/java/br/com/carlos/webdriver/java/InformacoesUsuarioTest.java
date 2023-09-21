@@ -23,13 +23,14 @@ public class InformacoesUsuarioTest {
         WebDriver navegador = new ChromeDriver(); // abrir o navegador
         
         //1 Clicar no link que possui o texto "Sign in"
-        //2 Clicar no campo que tem o id="login-sign-in"
-        //3 Digitar julio0001
-        //4 Clicar no campo que tem o id="password-sign-in"
-        //5 Digitar 123456
-        //6 Clicar no link que tem id="btn-submit-sign-in"
+        //2 Clicar no campo com name "login" que esta dentro do formulario de id="signinbox"
+        //3 Digitar no campo com name "login" que esta dentro do formulario de id="signinbox" o texto "julio0001"
+        //4 Clicar no campo com name "password" que esta dentro do formulario de id="signinbox"
+        //5 Digitar no campo com name "password" que esta dentro do formulario de id="signinbox" o texto  "123456"
+        //6 Clicar no link com o texto "SIGN IN"
         //7 Validar que dentro do elemento class="me" esta o texto "Hi, julio"
         //8 Fechar o navegador
+        //9 Validação
         
         
         navegador.get("http://www.juliodelima.com.br/taskit"); //Navegando para a pagina desejada
