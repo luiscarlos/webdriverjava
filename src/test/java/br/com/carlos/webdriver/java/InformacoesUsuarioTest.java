@@ -11,7 +11,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import junit.framework.Assert;
 
@@ -30,6 +33,44 @@ public class InformacoesUsuarioTest {
 
 		// Navegando para a pagina desejada
 		navegador.get("http://www.juliodelima.com.br/taskit");
+		
+		
+		//--
+		// 1 Clicar no link que possui o texto "Sign in"
+				navegador.findElement(By.linkText("Sign in")).click();
+				// ou
+				/*
+				 * WebElement linkSignIn = navegador.findElement(By.linkText("Sign in"));
+				 * linkSignIn.click();
+				 */
+
+				// 2 Identificar o formulário com campo login
+				WebElement formularioASignInBox = navegador.findElement(By.id("signinbox"));
+
+				// 3 Digitar no campo com name "login" que esta dentro do formulario de
+				// id="signinbox" o texto "julio0001"
+				formularioASignInBox.findElement(By.name("login")).sendKeys("julio0001");
+
+				// 4 Clicar no campo com name "password" que esta dentro do formulario de
+				// id="signinbox"
+				// 5 Digitar no campo com name "password" que esta dentro do formulario de
+				// id="signinbox" o texto "123456"
+				formularioASignInBox.findElement(By.name("password")).sendKeys("123456");
+
+				// 6 Clicar no link com o texto "SIGN IN"
+				formularioASignInBox.findElement(By.linkText("SIGN IN")).click();
+
+				// 7 Validar que dentro do elemento class="me" esta o texto "Hi, julio"
+				WebElement me = navegador.findElement(By.className("me"));
+
+				String textoNoElementoMe = me.getText();
+				assertEquals("Hi, Julio", textoNoElementoMe);
+				
+				//Clicar em um link que possue a classe ="me"
+				navegador.findElement(By.className("me")).click();
+				
+				//Clicar ni link com o nome "More data about you"
+				navegador.findElement(By.linkText("MORE DATA ABOUT YOU")).click();
 
 	}
 
@@ -40,45 +81,11 @@ public class InformacoesUsuarioTest {
 
 	}
 
-	@Test
+	//@Test
 	public void testAdicionarUmaInformacaoAdicionalDoUsuario() {
 		setUp();
 		
-		// 1 Clicar no link que possui o texto "Sign in"
-		navegador.findElement(By.linkText("Sign in")).click();
-		// ou
-		/*
-		 * WebElement linkSignIn = navegador.findElement(By.linkText("Sign in"));
-		 * linkSignIn.click();
-		 */
-
-		// 2 Identificar o formulário com campo login
-		WebElement formularioASignInBox = navegador.findElement(By.id("signinbox"));
-
-		// 3 Digitar no campo com name "login" que esta dentro do formulario de
-		// id="signinbox" o texto "julio0001"
-		formularioASignInBox.findElement(By.name("login")).sendKeys("julio0001");
-
-		// 4 Clicar no campo com name "password" que esta dentro do formulario de
-		// id="signinbox"
-		// 5 Digitar no campo com name "password" que esta dentro do formulario de
-		// id="signinbox" o texto "123456"
-		formularioASignInBox.findElement(By.name("password")).sendKeys("123456");
-
-		// 6 Clicar no link com o texto "SIGN IN"
-		formularioASignInBox.findElement(By.linkText("SIGN IN")).click();
-
-		// 7 Validar que dentro do elemento class="me" esta o texto "Hi, julio"
-		WebElement me = navegador.findElement(By.className("me"));
-
-		String textoNoElementoMe = me.getText();
-		assertEquals("Hi, Julio", textoNoElementoMe);
 		
-		//Clicar em um link que possue a classe ="me"
-		navegador.findElement(By.className("me")).click();
-		
-		//Clicar ni link com o nome "More data about you"
-		navegador.findElement(By.linkText("MORE DATA ABOUT YOU")).click();
 		
 		//Clicar no botao atravez do seu xpath //div[@id="moredata"]//button[@data-target="addmoredata"]
 		navegador.findElement(By.xpath("//div[@id=\"moredata\"]//button[@data-target=\"addmoredata\"]")).click();
@@ -108,6 +115,30 @@ public class InformacoesUsuarioTest {
 		// 9 Validação
 		//tearDown();
 
+	}
+	
+	@Test
+	public void removerUmContatoDeUmUsuario() {
+		
+		// clicar no elemento pelo seu xpath //span[text()="355"]/following-sibling::a quando postterio se for anterior usar o preceding
+		WebElement campo = navegador.findElement(By.xpath("//span[text()=\"+5584469655\"]/following-sibling::a"));
+		campo.click();
+		//Confirmar na janela javascript
+			navegador.switchTo().alert().accept();
+			
+		//Validar que a mensagem apresentada foi o texto"Rest in peace, dear phonel"
+			WebElement mensagemPop = navegador.findElement(By.id("toast-container"));
+			String mensagem = mensagemPop.getText();
+			assertEquals("Rest in peace, dear phonel", mensagem);
+			
+		//Aguardar ate 10 segundos para que a janela desapareça
+			WebDriverWait aguardar = new WebDriverWait(navegador, 10);
+			aguardar.until(ExpectedConditions.stalenessOf(mensagemPop));
+			
+		//Clicar no link com o texto "logout"
+			navegador.findElement(By.linkText("Logout")).click();
+			
+			//*[@id="moredata"]/div[1]/ul/li[165]/a
 	}
 
 	@After

@@ -17,7 +17,7 @@
 		<version>2.2.2.RELEASE</version> <!-- lookup parent from repository -->
 	</parent>
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>17</java.version>
 		<start-class>br.com.carlos.webdriver.java.App</start-class>
 	</properties>
 
